@@ -1,6 +1,6 @@
 # HomeFin
 
-This app reads in CSV exports from banks and other entities, and composes a view of how much money is spent month by month and year by year across different categories. It also allows you to make a budget across these categories, and helps you track spend according to that.
+This is a personal finance app which helps you stay on top of spend and budgeting. It reads in CSV exports from banks and other entities, and composes a view of how much money is spent month by month and year by year across different categories. It also allows you to make a budget across these categories, and helps you track spend according to that.
 
 Currently, the core database is a Google Sheet. The user fills in tabs to explain account setup and matching rules, and the app reads this along with CSVs and outputs data into several other tabs in the sheet.
 
