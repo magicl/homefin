@@ -1,0 +1,14 @@
+pandas
+numpy
+click
+pyarrow
+
+playwright
+PyPDF2
+
+gspread-formatting
+
+#pdfplumber #try this instead of PyPDF2.. PyPDF2 gets data out of order...
+#PyMuPDF #another alt.. pdfplumber has issues
+#pytesseract #same
+#pdf2image
