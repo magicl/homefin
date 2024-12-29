@@ -3,6 +3,7 @@
 # See LICENSE file or http://www.apache.org/licenses/LICENSE-2.0 for details.
 # ~
 
+import warnings
 from collections.abc import Callable
 from typing import Any
 
@@ -135,20 +136,25 @@ def dfMixColumns(table: pd.DataFrame, others: list[pd.DataFrame], otherNames: li
     # Keep track of start and end of each grouping
     cols = {c.date(): (i, i) for i, c in enumerate(table.columns)}  # timestamp itself does not generate a useful hash
 
-    for otherI, other in enumerate(others):
-        for c in other.columns:
-            date = c.date()
+    with warnings.catch_warnings():
+        warnings.simplefilter('ignore', pd.errors.PerformanceWarning)
+        for otherI, other in enumerate(others):
+            for c in other.columns:
+                date = c.date()
 
-            if date in cols:
-                idxFirst, idx = cols[date]
-                table.insert(idx + 1, otherNames[otherI](c), other[c], allow_duplicates=True)
+                if date in cols:
+                    idxFirst, idx = cols[date]
+                    table.insert(idx + 1, otherNames[otherI](c), other[c], allow_duplicates=True)
 
-                # Update column locations
-                cols[date] = (idxFirst, idx + 1)
-                cols = {
-                    c: (first, last) if first <= idxFirst else (first + 1, last + 1)
-                    for c, (first, last) in cols.items()
-                }
+                    # Update column locations
+                    cols[date] = (idxFirst, idx + 1)
+                    cols = {
+                        c: (first, last) if first <= idxFirst else (first + 1, last + 1)
+                        for c, (first, last) in cols.items()
+                    }
+
+    # Fix fragmentation due to lots of 'insert' calls above
+    table = table.copy()
 
     # Create groupings for columns that have received mixed in data
     groups = [
