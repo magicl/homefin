@@ -45,6 +45,8 @@ class RipplingProvider(FinProvider):
                 select('Blue Cross (Employee, Flat amount) (USD)', 'health care', True),
                 select('Roth 401K (Employee, Flat amount) (USD)', 'roth 401k', True),
                 select('401K (Employee, Flat amount) (USD)', '401k', True),
+                select('401K (Company, Flat amount) (USD)', 'contrib income', False),
+                select('401K (Company, Flat amount) (USD)', '401k company contrib ', True),
             ]
         )
         out['Pay period'] = out['Pay period'].fillna('')
