@@ -47,6 +47,10 @@ class RipplingProvider(FinProvider):
                 select('401K (Employee, Flat amount) (USD)', '401k', True),
                 select('401K (Company, Flat amount) (USD)', 'contrib income', False),
                 select('401K (Company, Flat amount) (USD)', '401k company contrib ', True),
+                # Reimbursements are not included in gross pay. Create two entries, to transfer from
+                # payroll payment and into the right account
+                select('Reimbursements (USD)', 'reimbursements debit', True),
+                select('Reimbursements (USD)', 'reimbursements credit', False),
             ]
         )
         out['Pay period'] = out['Pay period'].fillna('')

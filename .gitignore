@@ -42,3 +42,6 @@ dmypy.json
 
 # Environment file (keys, etc)
 .env.local
+
+#Typescript
+tsconfig.tsbuildinfo
